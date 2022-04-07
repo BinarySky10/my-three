@@ -1,25 +1,30 @@
 
-import type { WebGL1Renderer, WebGLRenderer } from 'three'
+import { MathUtils } from 'three'
+
+import type { WebGLRenderer } from 'three'
 import type { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer'
 import type { CSS3DRenderer } from 'three/examples/jsm/renderers/CSS3DRenderer'
-interface LoopElement{
+export interface LoopElement{
   name: String
-  update: Function
+  tick: Function
 }
 export default class Loop {
-  private _renderer: WebGL1Renderer
+  // 主renderer--------开启render循环
+  private _renderer: WebGLRenderer
+  // 需要循环执行其他元素  如同: OrbitControls
   private _elements: Map<String, LoopElement>
-  private _otherRenderers: Map<String, WebGLRenderer | CSS2DRenderer | CSS3DRenderer>
+  // 渲染器s  其他各种渲染器  CSS2DRenderer  CSS3DRenderer
+  private _renderers: Map<String, WebGLRenderer | CSS2DRenderer | CSS3DRenderer>
 
-  constructor(renderer: WebGL1Renderer) {
+  constructor(renderer: WebGLRenderer) {
     this._renderer = renderer
     this._elements = new Map<String, LoopElement>()
-    this._otherRenderers = new Map<String, WebGLRenderer|CSS2DRenderer | CSS3DRenderer>()
+    this._renderers = new Map<String, WebGLRenderer|CSS2DRenderer | CSS3DRenderer>()
   }
 
   start() {
     this._renderer.setAnimationLoop(() => {
-      this._update()
+      this._tick()
     })
   }
 
@@ -45,9 +50,9 @@ export default class Loop {
   //   this._otherRenderers.delete(name)
   // }
 
-  _update() {
+  _tick() {
     this._elements.forEach((obj: LoopElement) => {
-      obj.update()
+      obj.tick()
     })
     // default
     // for (const defaultKey in this.defaults) {

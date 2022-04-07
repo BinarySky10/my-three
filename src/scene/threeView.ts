@@ -1,7 +1,9 @@
 // import { GUI } from 'three/examples/jsm/libs/stats.module';
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import RenderLoop from './RenderLoop'
+import RenderLoop, { LoopElement } from './RenderLoop'
+import LoopWebGLRenderer from './LoopWebGLRenderer'
+
 // 基本 scene camera renderer 渲染循环
 // 新增 controls
 // 新增 resize
@@ -56,6 +58,7 @@ export class ThreeScene {
   renderer: THREE.WebGLRenderer
   camera: THREE.PerspectiveCamera
   private _controls: OrbitControls
+  private _renderLoop: RenderLoop
   constructor(elementId: string) {
     this._container = document.getElementById(elementId)
     if (this._container) {
@@ -88,9 +91,15 @@ export class ThreeScene {
     }
 
     // 渲染循环
-    this.renderer.setAnimationLoop(() => {
-      this.renderer.render(this.scene, this.camera)
-    })
+    // 循环需要start stop
+    // 需要添加或者移除 需要循环处理的 对象 指令
+    // this.renderer.setAnimationLoop(() => {
+    //   this.renderer.render(this.scene, this.camera)
+    // })
+    this._renderLoop = new RenderLoop(this.renderer)
+    // this.renderer.tick = () => {
+    //   this.renderer.uuid
+    // }
   }
 
   // 重新设置窗口宽高
