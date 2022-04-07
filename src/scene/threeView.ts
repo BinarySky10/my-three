@@ -44,11 +44,11 @@ function createRenderer(containerWidth: number, containerHeight: number): THREE.
   renderer.setSize(containerWidth, containerHeight)
   return renderer
 }
-function createOrbitControls(camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer): OrbitControls {
-  const controls = new OrbitControls(camera, renderer.domElement)
-  const proxy = new Proxy(controls, {})
-  return proxy
-}
+// function createOrbitControls(camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer): OrbitControls {
+//   const controls = new OrbitControls(camera, renderer.domElement)
+//   const proxy = new Proxy(controls, {})
+//   return proxy
+// }
 
 export class ThreeScene {
   private _container: HTMLElement
