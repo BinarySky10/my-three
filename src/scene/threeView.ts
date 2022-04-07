@@ -46,7 +46,6 @@ function createRenderer(containerWidth: number, containerHeight: number): THREE.
 }
 function createOrbitControls(camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer): OrbitControls {
   const controls = new OrbitControls(camera, renderer.domElement)
-  
   const proxy = new Proxy(controls, {})
   return proxy
 }
