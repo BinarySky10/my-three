@@ -34,7 +34,7 @@ export default class Loop {
     this._elements.delete(name)
   }
 
-  pushRenderer(renderer: LoopWebGLRenderer, tickFun: () => void) {
+  pushRenderer(renderer: LoopElement, tickFun: () => void) {
     const name = renderer.name
     renderer.tick = tickFun
     this._renderers.set(name, renderer)

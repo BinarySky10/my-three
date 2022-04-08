@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import RenderLoop from './RenderLoop'
 
-import { LoopWebGLRenderer } from './LoopElement'
+import { LoopOrbitControls, LoopWebGLRenderer } from './LoopElement'
 
 // 基本 scene camera renderer 渲染循环
 // 新增 controls
