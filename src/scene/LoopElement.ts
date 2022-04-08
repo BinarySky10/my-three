@@ -23,5 +23,7 @@ export class LoopOrbitControls extends OrbitControls implements LoopElement {
     this.name = 'OrbitControls'
   }
 
-  tick: () => void
+  tick() {
+    this.update()
+  }
 }
