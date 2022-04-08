@@ -2,6 +2,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import RenderLoop, { LoopElement } from './RenderLoop'
+
 import LoopWebGLRenderer from './LoopWebGLRenderer'
 
 // 基本 scene camera renderer 渲染循环
@@ -39,14 +40,14 @@ function createCamera(containerWidth: number, containerHeight: number): THREE.Pe
 
 /**
  * 创建渲染器
- * @returns {THREE.WebGLRenderer}
+ * @returns {LoopWebGLRenderer}
  */
-function createRenderer(containerWidth: number, containerHeight: number): THREE.WebGLRenderer {
-  const renderer = new THREE.WebGLRenderer()
+function createRenderer(containerWidth: number, containerHeight: number): LoopWebGLRenderer {
+  const renderer = new LoopWebGLRenderer()
   renderer.setSize(containerWidth, containerHeight)
   return renderer
 }
-// function createOrbitControls(camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer): OrbitControls {
+// function createOrbitControls(camera: THREE.PerspectiveCamera, renderer: LoopWebGLRenderer): OrbitControls {
 //   const controls = new OrbitControls(camera, renderer.domElement)
 //   const proxy = new Proxy(controls, {})
 //   return proxy
@@ -55,7 +56,7 @@ function createRenderer(containerWidth: number, containerHeight: number): THREE.
 export class ThreeScene {
   private _container: HTMLElement
   scene: THREE.Scene
-  renderer: THREE.WebGLRenderer
+  renderer: LoopWebGLRenderer
   camera: THREE.PerspectiveCamera
   private _controls: OrbitControls
   private _renderLoop: RenderLoop
@@ -97,9 +98,10 @@ export class ThreeScene {
     //   this.renderer.render(this.scene, this.camera)
     // })
     this._renderLoop = new RenderLoop(this.renderer)
-    // this.renderer.tick = () => {
-    //   this.renderer.uuid
-    // }
+    this.renderer.tick = () => {
+      this.renderer.render(this.scene, this.camera)
+    }
+    this._renderLoop.start()
   }
 
   // 重新设置窗口宽高

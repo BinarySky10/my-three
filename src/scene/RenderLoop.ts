@@ -1,25 +1,22 @@
 
-import { MathUtils } from 'three'
-
 import type { WebGLRenderer } from 'three'
 import type { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer'
 import type { CSS3DRenderer } from 'three/examples/jsm/renderers/CSS3DRenderer'
-export interface LoopElement{
-  name: String
-  tick: Function
-}
+import type { LoopElement } from './sceneTypes'
+import type LoopWebGLRenderer from './LoopWebGLRenderer'
 export default class Loop {
   // 主renderer--------开启render循环
-  private _renderer: WebGLRenderer
+  private _renderer: LoopWebGLRenderer
   // 需要循环执行其他元素  如同: OrbitControls
   private _elements: Map<String, LoopElement>
   // 渲染器s  其他各种渲染器  CSS2DRenderer  CSS3DRenderer
-  private _renderers: Map<String, WebGLRenderer | CSS2DRenderer | CSS3DRenderer>
+  private _renderers: Map<String, LoopElement>
 
-  constructor(renderer: WebGLRenderer) {
+  constructor(renderer: LoopWebGLRenderer) {
     this._renderer = renderer
     this._elements = new Map<String, LoopElement>()
-    this._renderers = new Map<String, WebGLRenderer|CSS2DRenderer | CSS3DRenderer>()
+    this._renderers = new Map<String, LoopElement>()
+    this.pushRenderer(this._renderer)
   }
 
   start() {
@@ -37,26 +34,26 @@ export default class Loop {
     this._elements.set(name, obj)
   }
 
-  remove(name: String) {
+  removeByName(name: String) {
     this._elements.delete(name)
   }
 
-  // pushRenderers(renderer: WebGLRenderer|CSS2DRenderer | CSS3DRenderer) {
-  //   const name = renderer.name!
-  //   this._otherRenderers.set(name, renderer)
-  // }
+  pushRenderer(renderer: LoopWebGLRenderer) {
+    const name = renderer.name
+    this._renderers.set(name, renderer)
+  }
 
-  // removeRenderers(name: String) {
-  //   this._otherRenderers.delete(name)
-  // }
+  removeRendererByName(name: String) {
+    this._renderers.delete(name)
+  }
 
   _tick() {
     this._elements.forEach((obj: LoopElement) => {
       obj.tick()
     })
     // default
-    // for (const defaultKey in this.defaults) {
-    //   const obj = this.defaults[defaultKey]
-    // }
+    this._renderers.forEach((render: LoopElement) => {
+      render.tick()
+    })
   }
 }
