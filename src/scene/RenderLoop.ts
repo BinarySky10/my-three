@@ -1,9 +1,6 @@
 
-import type { WebGLRenderer } from 'three'
-import type { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer'
-import type { CSS3DRenderer } from 'three/examples/jsm/renderers/CSS3DRenderer'
-import type { LoopElement } from './sceneTypes'
-import type LoopWebGLRenderer from './LoopWebGLRenderer'
+import type { LoopElement, LoopWebGLRenderer } from './LoopElement'
+
 export default class Loop {
   // 主renderer--------开启render循环
   private _renderer: LoopWebGLRenderer
@@ -16,7 +13,6 @@ export default class Loop {
     this._renderer = renderer
     this._elements = new Map<String, LoopElement>()
     this._renderers = new Map<String, LoopElement>()
-    this.pushRenderer(this._renderer)
   }
 
   start() {
@@ -38,8 +34,9 @@ export default class Loop {
     this._elements.delete(name)
   }
 
-  pushRenderer(renderer: LoopWebGLRenderer) {
+  pushRenderer(renderer: LoopWebGLRenderer, tickFun: () => void) {
     const name = renderer.name
+    renderer.tick = tickFun
     this._renderers.set(name, renderer)
   }
 

@@ -1,14 +1,16 @@
 import { WebGLRenderer } from 'three'
 import type { WebGLRendererParameters } from 'three'
-import type { LoopElement } from './sceneTypes'
-export default class LoopWebGLRenderer extends WebGLRenderer implements LoopElement {
+export interface LoopElement{
+  name: String
+  tick: () => void
+}
+
+export class LoopWebGLRenderer extends WebGLRenderer implements LoopElement {
   name: String
   constructor(parameters?: WebGLRendererParameters) {
     super(parameters)
     this.name = 'LoopWebGLRenderer'
   }
 
-  tick() {
-
-  }
+  tick: () => void
 }
