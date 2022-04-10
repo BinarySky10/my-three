@@ -51,7 +51,15 @@ function createRenderer(containerWidth: number, containerHeight: number): LoopWe
 //   const proxy = new Proxy(controls, {})
 //   return proxy
 // }
-
+interface Iscene{
+  assetsPath: string
+  container: HTMLElement
+  scene: THREE.Scene
+  mainCamera: THREE.Camera
+  renderLoop: any
+  clickEvent: any
+  controls: any
+}
 export class ThreeScene {
   private _container: HTMLElement
   scene: THREE.Scene
