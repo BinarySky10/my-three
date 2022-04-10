@@ -1,6 +1,5 @@
 // import { GUI } from 'three/examples/jsm/libs/stats.module';
 import * as THREE from 'three'
-import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import RenderLoop from './RenderLoop'
 
 import { LoopOrbitControls, LoopWebGLRenderer } from './LoopElement'
@@ -81,14 +80,6 @@ export class ThreeScene {
       this._setSize()
     })
 
-    // 渲染循环
-    this._renderLoop = new RenderLoop(this.renderer)
-
-    this._renderLoop.pushRenderer(this.renderer, () => {
-      this.renderer.render(this.scene, this.camera)
-    })
-    this._renderLoop.start()
-
     if (true) {
       // 使用控制器
       this._useOrbitControls()
@@ -100,6 +91,14 @@ export class ThreeScene {
     if (true) { // 网格辅助对象
       this.useGridHelper()
     }
+    // 渲染循环
+    this._renderLoop = new RenderLoop(this.renderer)
+
+    this._renderLoop.pushRenderer(this.renderer, () => {
+      this.renderer.render(this.scene, this.camera)
+    })
+    this._renderLoop.push(this._controls)
+    this._renderLoop.start()
   }
 
   // 重新设置窗口宽高
@@ -123,8 +122,6 @@ export class ThreeScene {
     this._controls.enablePan = false
     this._controls.enableDamping = true
     this._controls.saveState()
-
-    this._renderLoop.push(this._controls)
   }
 
   /** *********************************辅助工具**********************************************/
