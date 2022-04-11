@@ -1,8 +1,9 @@
 // import { GUI } from 'three/examples/jsm/libs/stats.module';
 import * as THREE from 'three'
+import type { Object3D } from 'three'
 import RenderLoop from './RenderLoop'
-
 import { LoopOrbitControls, LoopWebGLRenderer } from './LoopElement'
+import type { LoopElement } from './LoopElement'
 
 // 基本 scene camera renderer 渲染循环
 // 新增 controls
@@ -89,10 +90,6 @@ export class ThreeScene {
     })
 
     if (true) {
-      // 使用控制器
-      this._useOrbitControls()
-    }
-    if (true) {
       // 使用坐标轴
       this.useAxe()
     }
@@ -105,7 +102,11 @@ export class ThreeScene {
     this._renderLoop.pushRenderer(this.renderer, () => {
       this.renderer.render(this.scene, this.camera)
     })
-    this._renderLoop.push(this._controls)
+    // if (true) {
+    //   // 使用控制器
+    //   this._useOrbitControls()
+    // }
+
     this._renderLoop.start()
   }
 
@@ -130,6 +131,7 @@ export class ThreeScene {
     this._controls.enablePan = false
     this._controls.enableDamping = true
     this._controls.saveState()
+    this._renderLoop.push(this._controls)
   }
 
   /** *********************************辅助工具**********************************************/
@@ -168,8 +170,16 @@ export class ThreeScene {
     // // 上方向
   }
 
-  addMesh(mesh: THREE.Mesh) {
+  setCamera(obj: Object3D) {
+    // 设置位置
+    // this.camera.
+    // 朝向
+
+  }
+
+  addMesh(mesh: any) {
     this.scene.add(mesh)
+    this._renderLoop.push(mesh as LoopElement)
   }
 
   cameraTrack() {
