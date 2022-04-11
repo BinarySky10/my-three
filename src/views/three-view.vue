@@ -4,7 +4,7 @@ import * as THREE from 'three'
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import GUI from 'lil-gui'
 import { ThreeScene } from '@/scene/threeView'
-let threeScene = null
+let threeScene: ThreeScene = null
 let camera2 = null
 function handletoTest() {
   const s = threeScene as ThreeScene
@@ -21,14 +21,27 @@ function handletoJson() {
   const s = threeScene as ThreeScene
   console.log(s.camera.toJSON())
 }
+interface LoopMesh extends THREE.Mesh<THREE.BoxGeometry, THREE.MeshBasicMaterial> {
+  tick: () => void
+}
 
+let x = 1
+function createMesh(geometry: THREE.BoxGeometry, material: THREE.MeshBasicMaterial): LoopMesh {
+  const cube = new THREE.Mesh(geometry, material) as LoopMesh
+  cube.tick = () => {
+    x++
+    cube.position.setX(x / 100)
+  }
+  return cube
+}
 // 生命周期 挂载
 onMounted(() => {
   threeScene = new ThreeScene('three-container')
 
   const geometry = new THREE.BoxGeometry(2, 2, 2)
   const material = new THREE.MeshBasicMaterial({ color: 0x00FF00 })
-  const cube = new THREE.Mesh(geometry, material)
+  // const cube = new THREE.Mesh(geometry, material)
+  const cube = createMesh(geometry, material)
   threeScene.addMesh(cube)
   camera2 = threeScene.useCameraHelper()
   const theControl = Reflect.get(threeScene, '_controls') as OrbitControls
@@ -66,7 +79,7 @@ onMounted(() => {
   </button>
   <button @click="handletoTest()">
     test
-    </button>
+  </button>
 </template>
 <style lang="scss" scoped>
 #three-container {
