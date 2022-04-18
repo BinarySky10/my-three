@@ -10,16 +10,16 @@ const routes: Array<RouteRecordRaw> = [
   //   name: 'home',
   //   component: MineSweeper,
   // },
-  {
-    path: '/',
-    name: 'home',
-    component: ThreeView,
-  },
   // {
   //   path: '/',
   //   name: 'home',
-  //   component: SystemTest,
+  //   component: ThreeView,
   // },
+  {
+    path: '/',
+    name: 'home',
+    component: SystemTest,
+  },
 
 ]
 
