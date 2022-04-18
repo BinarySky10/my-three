@@ -6,6 +6,9 @@ export interface LoopElement{
   name: String
   tick: () => void
 }
+export interface LoopMesh extends THREE.Mesh<THREE.BoxGeometry, THREE.MeshBasicMaterial> {
+  tick: () => void
+}
 
 export class LoopWebGLRenderer extends WebGLRenderer implements LoopElement {
   name: String

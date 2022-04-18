@@ -182,7 +182,25 @@ export class ThreeScene {
     this._renderLoop.push(mesh as LoopElement)
   }
 
-  cameraTrack() {
+  cameraTrack(mesh: THREE.Mesh) {
+    // 意外 单纯实现相机追踪 没用极坐标, 只用向量+原点就解决了
+    const targetPosition0 = mesh.position
+    const cameraPosition0 = this.camera.position
+    const offset0 = new THREE.Vector3().copy(cameraPosition0).sub(targetPosition0/* fcous on 位置 */)
+    // 这相当于实现了一个闭包, 但是由此可见,闭包对于代码可读性没什么提升
+    this._renderLoop.push({
+      name: 'cameraTrack',
+      tick: () => {
+        const targetPosition = mesh.position
+        // 相机位置= target + 相机指向向量
+        this.camera.position.copy(targetPosition).add(offset0)
+        // 相加仍然看向target
+        this.camera.lookAt(targetPosition)
+      },
+    })
+  }
 
+  cameraUntrack() {
+    this._renderLoop.removeByName('cameraTrack')
   }
 }

@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import GUI from 'lil-gui'
 import { ThreeScene } from '@/scene/threeView'
+import type { LoopMesh } from '@/scene/LoopElement'
 let threeScene: ThreeScene = null
 let camera2 = null
 function handletoTest() {
@@ -18,11 +19,7 @@ function handleResetCamera() {
 }
 function handletoJson() {
   // 相机tojson临时
-  const s = threeScene as ThreeScene
-  console.log(s.camera.toJSON())
-}
-interface LoopMesh extends THREE.Mesh<THREE.BoxGeometry, THREE.MeshBasicMaterial> {
-  tick: () => void
+  const s = threeScene
 }
 
 let x = 1
@@ -60,12 +57,20 @@ onMounted(() => {
       theControl.autoRotate = false
       theControl.update()
     },
+    cameraTrack() {
+      threeScene.cameraTrack(cube)
+    },
+    cameraUntrack() {
+      threeScene.cameraUntrack()
+    },
   }
   const gui = new GUI()
   const folder3 = gui.addFolder('相机控制')
   folder3.add(controls, 'resetCamera').name('重置相机')
   folder3.add(controls, 'startAutoRotate').name('开启旋转')
   folder3.add(controls, 'stopAutoRotate').name('关闭旋转')
+  folder3.add(controls, 'cameraTrack').name('开始追踪')
+  folder3.add(controls, 'cameraUntrack').name('关闭追踪')
 })
 
 </script>
