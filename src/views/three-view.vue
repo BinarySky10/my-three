@@ -27,7 +27,7 @@ function createMesh(geometry: THREE.BoxGeometry, material: THREE.MeshBasicMateri
   const cube = new THREE.Mesh(geometry, material) as LoopMesh
   cube.tick = () => {
     x++
-    cube.position.setX(x / 100)
+    cube.position.setX(x / 50)
   }
   return cube
 }

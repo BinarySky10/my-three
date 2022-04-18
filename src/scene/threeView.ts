@@ -102,10 +102,10 @@ export class ThreeScene {
     this._renderLoop.pushRenderer(this.renderer, () => {
       this.renderer.render(this.scene, this.camera)
     })
-    // if (true) {
-    //   // 使用控制器
-    //   this._useOrbitControls()
-    // }
+    if (true) {
+      // 使用控制器
+      this._useOrbitControls()
+    }
 
     this._renderLoop.start()
   }
@@ -191,6 +191,7 @@ export class ThreeScene {
     this._renderLoop.push({
       name: 'cameraTrack',
       tick: () => {
+        // this._controls.target = mesh.position
         const targetPosition = mesh.position
         // 相机位置= target + 相机指向向量
         this.camera.position.copy(targetPosition).add(offset0)
