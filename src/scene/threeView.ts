@@ -187,7 +187,7 @@ export class ThreeScene {
     const targetPosition0 = mesh.position
     const cameraPosition0 = this.camera.position
     const offset0 = new THREE.Vector3().copy(cameraPosition0).sub(targetPosition0/* fcous on 位置 */)
-    // 这相当于实现了一个闭包, 但是由此可见,闭包对于代码可读性没什么提升
+    // 这相当于实现了一个闭包, 但是由此可见,闭包会导致代码可读性下降的 尤其是隐藏形闭包+无作用域意识变量
     this._renderLoop.push({
       name: 'cameraTrack',
       tick: () => {
