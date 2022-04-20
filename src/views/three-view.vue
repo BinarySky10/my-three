@@ -35,6 +35,7 @@ function createMesh(geometry: THREE.BoxGeometry, material: THREE.MeshBasicMateri
   }
   return cube
 }
+
 // 生命周期 挂载
 onMounted(async () => {
   threeScene = new ThreeScene('three-container')
@@ -43,9 +44,10 @@ onMounted(async () => {
   const material = new THREE.MeshBasicMaterial({ color: 0x00FF00 })
   // const cube = new THREE.Mesh(geometry, material)
   const cube = createMesh(geometry, material)
-  cube.
-    threeScene.addMesh(cube)
+  cube.name = 'cube'
+  threeScene.addMesh(cube)
   // threeScene.cameraTrack(cube)
+
   const loader = new GLTFLoader()
   async function loadGltf() {
     const gltf = await loader.loadAsync(new URL('../scene/assets/scene/model/weilan.gltf', import.meta.url).href)
@@ -59,26 +61,13 @@ onMounted(async () => {
     return gltf.scene
   }
   const y = await loadGltf()
-  y.tick = () => { }
-  y.name = 'weilan'
-  threeScene.addMesh(y)
-
-  // loader.loadAsync(new URL('../scene/assets/scene/model/weilan.gltf', import.meta.url).href).then((value) => {
-  //   // debugger
-  //   console.log(value)
-  //   debugger
-  //   value.scene.traverse((child: Object3D) => {
-  //     debugger
-  //     if (child.isMesh) {
-  //       child.material.emissive = child.material.color
-  //       child.material.emissiveMap = child.material.map
-  //     }
-  //   })
-  //   const y = value.scene
-  //   // .children[0]
-  //   y.tick = () => { }
-  //   threeScene.addMesh(y)
-  // })
+  for (let i = 0; i < 100; i++) {
+    const z = y.clone()
+    z.tick = () => { }
+    z.name = `weilan${i}`
+    z.position.z = -i
+    threeScene.addMesh(z)
+  }
 
   camera2 = threeScene.useCameraHelper()
   const theControl = Reflect.get(threeScene, '_controls') as OrbitControls
@@ -129,7 +118,7 @@ onMounted(async () => {
 </template>
 <style lang="scss" scoped>
 #three-container {
-  height: 600px;
-  width: 600px;
+  height: 1000px;
+  width: 2000px;
 }
 </style>
