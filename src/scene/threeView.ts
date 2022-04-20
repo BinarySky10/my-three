@@ -1,5 +1,6 @@
 // import { GUI } from 'three/examples/jsm/libs/stats.module';
 import * as THREE from 'three'
+import Stats from 'three/examples/jsm/libs/stats.module'
 import type { Object3D } from 'three'
 import RenderLoop from './RenderLoop'
 import { LoopOrbitControls, LoopWebGLRenderer } from './LoopElement'
@@ -112,6 +113,8 @@ export class ThreeScene {
       // 使用控制器
       this._useOrbitControls()
     }
+    //
+    this._useStat()
 
     this._renderLoop.start()
   }
@@ -141,6 +144,16 @@ export class ThreeScene {
   }
 
   /** *********************************辅助工具**********************************************/
+  _useStat() {
+    const stats = new Stats()
+    document.body.appendChild(stats.dom)
+    stats.name = 'stats'
+    stats.tick = () => {
+      stats.update()
+    }
+    this._renderLoop.push(stats as LoopElement)
+  }
+
   useAxe() {
     const axesHelper = new THREE.AxesHelper(10)
     this.scene.add(axesHelper)

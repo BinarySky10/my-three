@@ -8,6 +8,7 @@ import type { Mesh, Object3D } from 'three'
 import { Scene } from 'three'
 import { ThreeScene } from '@/scene/threeView'
 import type { LoopMesh } from '@/scene/LoopElement'
+
 let threeScene: ThreeScene = null
 let camera2 = null
 function handletoTest() {
@@ -42,7 +43,9 @@ onMounted(async () => {
   const material = new THREE.MeshBasicMaterial({ color: 0x00FF00 })
   // const cube = new THREE.Mesh(geometry, material)
   const cube = createMesh(geometry, material)
-  threeScene.addMesh(cube)
+  cube.
+    threeScene.addMesh(cube)
+  // threeScene.cameraTrack(cube)
   const loader = new GLTFLoader()
   async function loadGltf() {
     const gltf = await loader.loadAsync(new URL('../scene/assets/scene/model/weilan.gltf', import.meta.url).href)
@@ -57,7 +60,7 @@ onMounted(async () => {
   }
   const y = await loadGltf()
   y.tick = () => { }
-
+  y.name = 'weilan'
   threeScene.addMesh(y)
 
   // loader.loadAsync(new URL('../scene/assets/scene/model/weilan.gltf', import.meta.url).href).then((value) => {
@@ -112,6 +115,7 @@ onMounted(async () => {
 
 </script>
 <template>
+  <div id="Stats-output" />
   <div id="three-container" />
   <button @click="handleResetCamera()">
     重置相机
