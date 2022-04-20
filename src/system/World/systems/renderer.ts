@@ -1,6 +1,6 @@
 import { WebGLRenderer } from 'three'
 
-function createRenderer() {
+function createRenderer(): WebGLRenderer {
   const renderer = new WebGLRenderer({ antialias: true })
 
   renderer.physicallyCorrectLights = true
