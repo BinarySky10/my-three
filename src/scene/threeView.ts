@@ -4,6 +4,7 @@ import type { Object3D } from 'three'
 import RenderLoop from './RenderLoop'
 import { LoopOrbitControls, LoopWebGLRenderer } from './LoopElement'
 import type { LoopElement } from './LoopElement'
+import { createLights } from './component/lights'
 
 // 基本 scene camera renderer 渲染循环
 // 新增 controls
@@ -180,6 +181,11 @@ export class ThreeScene {
     // this.camera.
     // 朝向
 
+  }
+
+  useLight() {
+    const { ambientLight, mainLight } = createLights()
+    this.scene.add(ambientLight, mainLight)
   }
 
   addMesh(mesh: any) {

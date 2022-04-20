@@ -3,6 +3,9 @@ import { defineComponent, onMounted, reactive, ref } from 'vue'
 import * as THREE from 'three'
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import GUI from 'lil-gui'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import type { Mesh, Object3D } from 'three'
+import { Scene } from 'three'
 import { ThreeScene } from '@/scene/threeView'
 import type { LoopMesh } from '@/scene/LoopElement'
 let threeScene: ThreeScene = null
@@ -32,7 +35,7 @@ function createMesh(geometry: THREE.BoxGeometry, material: THREE.MeshBasicMateri
   return cube
 }
 // 生命周期 挂载
-onMounted(() => {
+onMounted(async () => {
   threeScene = new ThreeScene('three-container')
 
   const geometry = new THREE.BoxGeometry(2, 2, 2)
@@ -40,6 +43,40 @@ onMounted(() => {
   // const cube = new THREE.Mesh(geometry, material)
   const cube = createMesh(geometry, material)
   threeScene.addMesh(cube)
+  const loader = new GLTFLoader()
+  async function loadGltf() {
+    const gltf = await loader.loadAsync(new URL('../scene/assets/scene/model/weilan.gltf', import.meta.url).href)
+
+    gltf.scene.traverse((child) => {
+      if (child.isMesh) {
+        child.material.emissive = child.material.color
+        child.material.emissiveMap = child.material.map
+      }
+    })
+    return gltf.scene
+  }
+  const y = await loadGltf()
+  y.tick = () => { }
+
+  threeScene.addMesh(y)
+
+  // loader.loadAsync(new URL('../scene/assets/scene/model/weilan.gltf', import.meta.url).href).then((value) => {
+  //   // debugger
+  //   console.log(value)
+  //   debugger
+  //   value.scene.traverse((child: Object3D) => {
+  //     debugger
+  //     if (child.isMesh) {
+  //       child.material.emissive = child.material.color
+  //       child.material.emissiveMap = child.material.map
+  //     }
+  //   })
+  //   const y = value.scene
+  //   // .children[0]
+  //   y.tick = () => { }
+  //   threeScene.addMesh(y)
+  // })
+
   camera2 = threeScene.useCameraHelper()
   const theControl = Reflect.get(threeScene, '_controls') as OrbitControls
 
