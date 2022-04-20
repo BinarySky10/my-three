@@ -15,10 +15,15 @@ import type { LoopElement } from './LoopElement'
 function createScene(): THREE.Scene {
   const scene = new THREE.Scene()
   // // scene 天空盒
-  const r = '../../public/scene/skybox/Bridge2/'
-  const urls = [`${r}posx.jpg`, `${r}negx.jpg`,
-    `${r}posy.jpg`, `${r}negy.jpg`,
-    `${r}posz.jpg`, `${r}negz.jpg`]
+  const r = './assets/scene/skybox/Bridge2/'
+  const urls = [
+    new URL(`${r}posx.jpg`, import.meta.url).href,
+    new URL(`${r}negx.jpg`, import.meta.url).href,
+    new URL(`${r}posy.jpg`, import.meta.url).href,
+    new URL(`${r}negy.jpg`, import.meta.url).href,
+    new URL(`${r}posz.jpg`, import.meta.url).href,
+    new URL(`${r}negz.jpg`, import.meta.url).href,
+  ]
   const textureCube = new THREE.CubeTextureLoader().load(urls)
   scene.background = textureCube
   return scene
