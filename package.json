@@ -6,7 +6,8 @@
     "build": "vite build",
     "serve": "vite preview",
     "lint:init": "npx eslint --init",
-    "lint": "npx eslint ./src/*.ts"
+    "lint": "npx eslint ./src/*.ts",
+    "test":"npx vitest"
   },
   "dependencies": {
     "@types/uuid": "^8.3.4",
@@ -28,6 +29,7 @@
     "sass-loader": "^8.0.2",
     "typescript": "^4.5.4",
     "vite": "^2.8.0",
+    "vitest": "^0.9.3",
     "vue-tsc": "^0.29.8"
   }
 }
