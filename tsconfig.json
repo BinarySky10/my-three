@@ -6,7 +6,7 @@
   ],
   "compilerOptions": {
     "module": "ESNext",
-    "target": "es2019", // [ ] 不知为啥 加了这个我ts错误就没了
+    "target": "es2019",
     "moduleResolution": "node",
     // "types": [ // npm i -D @types/node
     //   "node"

@@ -218,7 +218,7 @@ export class ThreeScene {
         // this._controls.target = mesh.position
         const targetPosition = new THREE.Vector3().copy(mesh.position)
         // 相机位置= target + 相机指向向量
-        this.camera.position.copy(targetPosition).add(offset0)
+        this.camera.position.copy(targetPosition).add(offset0.setLength(10))
         // 相加仍然看向target
         this.camera.lookAt(targetPosition)
       },

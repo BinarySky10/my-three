@@ -118,7 +118,7 @@ onMounted(async () => {
 </template>
 <style lang="scss" scoped>
 #three-container {
-  height: 1000px;
-  width: 2000px;
+  height: 700px;
+  width: 800px;
 }
 </style>

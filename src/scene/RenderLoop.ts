@@ -10,6 +10,7 @@ export default class Loop {
   private _renderers: Map<String, LoopElement>
 
   constructor(renderer: LoopWebGLRenderer) {
+    // TODO:tick顺序
     this._renderer = renderer
     this._elements = new Map<String, LoopElement>()
     this._renderers = new Map<String, LoopElement>()
@@ -45,6 +46,7 @@ export default class Loop {
   }
 
   _tick() {
+    // [ ] tick时间同步
     this._elements.forEach((obj: LoopElement) => {
       obj.tick()
     })
